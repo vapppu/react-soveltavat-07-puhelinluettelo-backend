@@ -27,6 +27,12 @@ app.get('/', (req, res) => {
     res.send("<h1>Puhelinluettelo</h1>")
 })
 
+app.get('/info', (req, res) => {
+    console.log("RESPONSE STARTS HERE")
+    const date = Date.now()
+    res.send(`<p>Phonebook has info for ${persons.length} people.<p><p>${new Date(date).toString()}</p>`)
+    })
+
 app.get('/api/persons', (req, res) => {
     res.json(persons)
 })
