@@ -28,13 +28,33 @@ app.get('/', (req, res) => {
 })
 
 app.get('/info', (req, res) => {
-    console.log("RESPONSE STARTS HERE")
     const date = Date.now()
     res.send(`<p>Phonebook has info for ${persons.length} people.<p><p>${new Date(date).toString()}</p>`)
     })
 
 app.get('/api/persons', (req, res) => {
     res.json(persons)
+})
+
+app.get('/api/persons/:id', (req, res) => {
+  const person = persons.find(person => person.id === Number(req.params.id))
+  if (person) {
+    res.json(person)
+  }
+  else {
+    res.status(404).end()
+  }
+})
+
+app.delete('/api/persons/:id', (req, res) => {
+  const person = persons.find(person => String(person.id) === req.params.id)
+  if (person) {
+    persons = persons.filter(person => person.id !== Number(req.params.id))
+    res.status(204).end()
+  }
+  else {
+    res.status(404).end()
+  }
 })
 
 const PORT = 3001
