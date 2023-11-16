@@ -74,9 +74,15 @@ app.post('/api/persons', (req, res) => {
   if (!(body.name && body.number))
   {
     return res.status(400).json({
-      error: 'Name and number missing'
+      error: "Request must contain name and number"
     })
   }
+  else if ((persons.find(person => person.name === body.name))) {
+    return res.status(400).json({
+      error: "Name must be unique"
+    })
+  }
+
   const person = {name: body.name, number: body.number, id: generateId()}
   persons = persons.concat(person)
   res.json(person)
